@@ -1,4 +1,5 @@
 import com.yyc.dao.UserMapper;
+import com.yyc.entity.Page;
 import com.yyc.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,5 +30,24 @@ public class JdbcTest {
     @Test
     public void testGetUser(){
         System.out.println(userMapper.getUser("10000"));
+    }
+
+    @Test
+    public void testPage(){
+        Page page = new Page();
+        page.setPage(2);
+        page.setRecord(2);
+        System.out.println(userMapper.getPageUser(page));
+    }
+
+
+    @Test
+    public void testCount(){
+        System.out.println(userMapper.getCount());
+    }
+
+    @Test
+    public void deleteUser(){
+        userMapper.deleteUser("10002");
     }
 }

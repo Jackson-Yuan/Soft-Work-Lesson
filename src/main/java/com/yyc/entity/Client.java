@@ -18,11 +18,19 @@ public class Client {
 
     private String medicineId;
 
+    private String userId;
+
+    private String recordId;
+
     private String condition;
 
     private String remark;
 
     private Date date;
+
+    private Boolean handled;
+
+    private String phone;
 
     public Client() {
     }
@@ -99,6 +107,38 @@ public class Client {
         this.date = date;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
+    }
+
+    public Boolean getHandled() {
+        return handled;
+    }
+
+    public void setHandled(Boolean handled) {
+        this.handled = handled;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
@@ -108,9 +148,13 @@ public class Client {
                 ", age=" + age +
                 ", address='" + address + '\'' +
                 ", medicineId='" + medicineId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", recordId='" + recordId + '\'' +
                 ", condition='" + condition + '\'' +
                 ", remark='" + remark + '\'' +
                 ", date=" + date +
+                ", handled=" + handled +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }

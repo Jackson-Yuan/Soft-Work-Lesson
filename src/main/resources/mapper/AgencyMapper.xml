@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyc.dao.AgencyMapper">
+    <resultMap id="agencyMap" type="com.yyc.entity.Agency">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="chargePerson" column="charge_person"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+
+    <select id="getAgency" resultMap="agencyMap">
+        SELECT * FROM agency WHERE id = #{id}
+    </select>
+
+    <insert id="insertAgency">
+        INSERT INTO agency VALUES (#{id},#{name},#{chargePerson},#{sex},#{phone})
+    </insert>
+
+    <select id="getPageAgency" resultMap="agencyMap">
+        SELECT * FROM agency LIMIT ${(page-1)*record},#{record}
+    </select>
+
+    <select id="getCount" resultType="integer">
+        SELECT count(*) FROM agency
+    </select>
+
+    <update id="updateAgency">
+        update agency SET name = #{name}, charge_person = #{chargePerson}, sex = #{sex}, phone = #{phone} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteAgency">
+        DELETE FROM agency WHERE id = #{id}
+    </delete>
+</mapper>

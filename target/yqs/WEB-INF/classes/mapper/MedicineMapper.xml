@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyc.dao.MedicineMapper">
+    <resultMap id="medicineMap" type="com.yyc.entity.Medicine">
+        <id property="id" column="medicine_id"/>
+        <id property="batchId" column="batch_id"/>
+        <result property="user_id" column="userId"/>
+        <result property="name" column="name"/>
+        <result property="introduction" column="introduction"/>
+        <result property="method" column="method"/>
+        <result property="type" column="type"/>
+        <result property="quantity" column="quantity"/>
+        <result property="specification" column="specification"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="resource" column="resource"/>
+        <result property="price" column="price"/>
+    </resultMap>
+
+    <resultMap id="simplifyMedicineMap" type="com.yyc.entity.Medicine">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="introduction" column="introduction"/>
+        <result property="method" column="method"/>
+        <result property="specification" column="specification"/>
+        <result property="quantity" column="quantity"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+
+    <insert id="insertMedicine" parameterType="com.yyc.entity.Medicine">
+        INSERT INTO medicine VALUES (#{id},#{name},#{introduction}, #{method}, #{specification}, #{quantity}, #{type})
+    </insert>
+
+    <insert id="insertPurchaseMedicine" parameterType="com.yyc.entity.Medicine">
+        INSERT INTO purchase VALUES (#{batchId}, #{id}, #{startTime}, #{endTime}, #{quantity}, #{price}, #{resource}, #{userId})
+    </insert>
+
+    <update id="updateMedicine" parameterType="com.yyc.entity.Medicine">
+        update medicine SET `name` = #{name} , introduction = #{introduction}, specification = #{specification}
+        ,method = #{method}, quantity = #{quantity}, `type` = #{type}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getMedicine" resultMap="simplifyMedicineMap">
+        SELECT * FROM medicine WHERE id = #{id}
+    </select>
+
+    <select id="getAllMedicine" resultMap="medicineMap">
+        SELECT * FROM detailMedicine
+    </select>
+
+    <select id="getPageMedicine" resultMap="medicineMap">
+        SELECT * FROM detailMedicine LIMIT ${(page-1)*record},#{record}
+    </select>
+
+    <select id="getCount" resultType="integer">
+        SELECT count(*) FROM detailMedicine
+    </select>
+
+    <delete id="deleteMedicine">
+        DELETE FROM medicine WHERE id = #{id}
+    </delete>
+
+    <select id="getBatchMedicine" resultMap="medicineMap">
+        SELECT * FROM detailMedicine WHERE medicine_id = #{id}
+    </select>
+</mapper>

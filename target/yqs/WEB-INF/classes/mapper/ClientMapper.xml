@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyc.dao.ClientMapper">
+    <resultMap id="clientMap" type="com.yyc.entity.Client">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="address" column="address"/>
+        <result property="medicineId" column="medicine_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="recordId" column="record_id"/>
+        <result property="condition" column="condition"/>
+        <result property="remark" column="remark"/>
+        <result property="date" column="date"/>
+        <result property="handled" column="handled"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+    <insert id="insertClient" parameterType="com.yyc.entity.Client">
+          INSERT INTO client VALUES (#{id},#{name},#{sex},#{age},#{address},#{medicineId},#{condition},#{remark},#{date},#{userId})
+    </insert>
+
+    <select id="getPageClient" resultMap="clientMap">
+        SELECT record.client_id id, `name`, sex, age, address, medicine_id, user_id, record.id record_id, `condition`, remark, `date`, phone, handled  FROM client,record
+        WHERE client.id = record.client_id
+        <if test="recordId != null">
+        AND record_id = #{recordId}
+        </if>
+        <if test="userId != null">
+         AND  user_id = #{userId}
+        </if>
+        <if test="handled != null">
+        AND  handled = #{handled}
+        </if>
+        LIMIT ${(page.page-1)*page.record},#{page.record};
+    </select>
+
+    <select id="getCount" resultType="integer">
+        SELECT count(*) FROM client,record
+        WHERE client.id = record.client_id
+        <if test="recordId != null">
+          AND record.id= #{recordId}
+        </if>
+        <if test="userId != null">
+          AND  record.user_id = #{userId}
+        </if>
+        <if test="handled != null">
+          AND  record.handled = #{handled}
+        </if>
+    </select>
+
+    <select id="getClient" resultMap="clientMap">
+        SELECT * FROM client WHERE id = #{id}
+    </select>
+
+    <update id="updateClient">
+        update client SET name = #{name} , `condition` = #{condition}, remark = #{remark}, medicine_id = #{medicineId},age = #{age},
+        address = #{address} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteClient">
+        DELETE FROM record WHERE id = #{id}
+    </delete>
+
+
+    <insert id="insertPersonMessage" parameterType="com.yyc.entity.Client">
+        INSERT INTO client VALUES (#{id}, #{name}, #{sex}, #{age}, #{address}, #{phone})
+    </insert>
+
+    <update id="updatePersonMessage">
+        UPDATE client SET `name` = #{name}, sex = #{sex}, age = #{age}, address = #{address}, phone = #{phone}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getPersonMessage" resultMap="clientMap">
+        SELECT * FROM client WHERE id = #{id}
+    </select>
+
+    <insert id="insertRecord" parameterType="com.yyc.entity.Client">
+        INSERT INTO record VALUES (#{recordId}, #{id}, #{condition}, #{remark}, #{date}, #{userId}, #{medicineId}, #{handled})
+    </insert>
+
+    <update id="updateRecord">
+        UPDATE record SET medicine_id = #{medicineId},handled = #{handled} WHERE id = #{recordId}
+    </update>
+    
+    <select id="getRecord" resultMap="clientMap">
+        SELECT id `record_id`, client_id id, `condition`, remark, `date`, user_id, medicine_id, handled FROM record WHERE id = #{id}
+    </select>
+
+    <select id="getComprehensiveClient" resultMap="clientMap">
+        select record.client_id id, `name`, sex, age, address, medicine_id, user_id, record.id record_id, `condition`, remark, `date`, phone, handled  FROM client,record
+        WHERE client.id = record.client_id AND record.id = #{id}
+    </select>
+</mapper>

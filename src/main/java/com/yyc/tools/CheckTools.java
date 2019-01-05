@@ -20,4 +20,11 @@ public class CheckTools {
         Matcher matcher = pattern.matcher(id);
         if (!matcher.matches()) throw new IllegalCharacterException("账户名含有非法字符");
     }
+
+    public static void checkPhone(String phone){
+        String regex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(phone);
+        if (!matcher.matches()) throw new IllegalCharacterException("电话号码格式有误");
+    }
 }

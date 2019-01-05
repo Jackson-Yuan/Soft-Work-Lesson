@@ -1,5 +1,6 @@
 package com.yyc.dao;
 
+import com.yyc.entity.Page;
 import com.yyc.entity.User;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface UserMapper {
 
     User getUser(String id);
 
-    List<User> getPageUser();
+    List<User> getPageUser(Page page);
+
+    Integer getCount();
 }
